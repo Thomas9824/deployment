@@ -1,0 +1,24 @@
+'use client'
+
+import { WebGLTunnel } from '@/webgl/components/tunnel'
+import { useRect } from 'hamo'
+import dynamic from 'next/dynamic'
+
+const WebGLBox = dynamic(
+  () => import('./webgl').then(({ WebGLBox }) => WebGLBox),
+  {
+    ssr: false,
+  }
+)
+
+export function Box({ className }) {
+  const [setRectRef, rect] = useRect()
+
+  return (
+    <div ref={setRectRef} className={className}>
+      <WebGLTunnel>
+        <WebGLBox rect={rect} />
+      </WebGLTunnel>
+    </div>
+  )
+}
